@@ -15,14 +15,11 @@ namespace OOP_RPG
         public int CurrentHP { get; set; }
         public Weapon EquippedWeapon { get; set; }
         public Armor EquippedArmor { get; set; }
-        public Potion EquippedPotion { get; set; }
         public Game Game { get; set; }
         public int Gold { get; set; }
         public Weapon Weapon { get; set; }
         public Potion Potion { get; set; }
         public Armor Armor { get; set; }
-
-
 
         public List<Armor> ArmorsBag { get; set; }
         public List<Weapon> WeaponsBag { get; set; }
@@ -86,7 +83,8 @@ namespace OOP_RPG
             Console.WriteLine("1.) Equip A Weapon.");
             Console.WriteLine("2.) Equip An Armor");
             Console.WriteLine("3.) Drink Potion");
-            Console.WriteLine("4.) Continue Adventure");
+            Console.WriteLine("4.) Unequip An Item.");
+            Console.WriteLine("5.) Continue Adventure");
             var MenuSelection = Console.Read();
             switch (MenuSelection)
             {
@@ -167,6 +165,24 @@ namespace OOP_RPG
                     }
                     break;
                 case 4:
+                    Console.WriteLine("Which Item Would You Like To Unequip?");
+                    Console.WriteLine($"1.){EquippedWeapon.Name} {EquippedWeapon.Strength} Strength");
+                    Console.WriteLine($"2.){EquippedArmor.Name} {EquippedArmor.Defense} Defense");
+                    Console.WriteLine($"3.)Continue Adventure");
+                    var i = Console.Read();
+                   
+                    switch (i)
+                    case 1:
+                        UnEquipWeapon();
+                        break;
+                    case 2:
+                        UnEquipArmor();
+                        break;
+                    case 3:
+                        ShowInventory();
+                    break;
+
+                case 5:
                     Game.Main();
                     break;
 
@@ -178,37 +194,179 @@ namespace OOP_RPG
 
 
 
-        public void EquipWeapon(Weapon)
+        public void EquipWeapon(Weapon weapon)
         {
-            
-        }
-
-        public void EquipArmor(Armor)
-        {
-            if (ArmorsBag.Any())
+            if(EquippedWeapon == null)
             {
-                this.EquippedArmor = this.ArmorsBag[0];
+                this.EquippedWeapon = weapon;
+                WeaponsBag.Remove(weapon);
+                Strength += weapon.Strength;
+                Console.WriteLine($"You Are Now Weilding a {weapon.Name} For + {weapon.OriginalValue} Strength");
+                Console.WriteLine();
+                ShowInventory();
+            }
+            else
+            {
+                Console.WriteLine("You already have a weapon equipped.");
+                Console.WriteLine();
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine("1. Back to Inventory.");
+                Console.WriteLine("2. Continue Adventure.");
+                Console.WriteLine("3. Back To Town.");
+
+                var input = Console.ReadLine();
+                if (input == "1")
+                {
+                    this.ShowInventory();
+                }
+                else if (input == "2")
+                {
+                    var explore = new Explore(this, Game);
+                    explore.Start();
+                }
+                else if (input == "3")
+                {
+                    Game.Main();
+                }
+
             }
         }
 
+        public void EquipArmor(Armor armor)
+        {
+            if (EquippedArmor == null)
+            {
+                this.EquippedArmor = armor;
+                ArmorsBag.Remove(armor);
+                Defense += armor.Defense;
+                Console.WriteLine($"You Are Now Wearing {armor.Name} For + {armor.OriginalValue} Defense");
+                Console.WriteLine();
+
+                ShowInventory();
+            }
+            else
+            {
+                Console.WriteLine("You already have a weapon equipped.");
+                Console.WriteLine();
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine("1. Back to Inventory.");
+                Console.WriteLine("2. Continue Adventure.");
+                Console.WriteLine("3. Back To Town.");
+
+                var input = Console.ReadLine();
+                if (input == "1")
+                {
+                    this.ShowInventory();
+                }
+                else if (input == "2")
+                {
+                    var explore = new Explore(this, Game);
+                    explore.Start();
+                }
+                else if (input == "3")
+                {
+                    Game.Main();
+                }
+
+            }
+
+
+        }
+
+        public void UnEquipWeapon(Weapon weapon)
+        {
+            if (EquippedWeapon != null)
+            {
+                this.EquippedWeapon = null;
+                WeaponsBag.Add(weapon);
+                Strength -= weapon.Strength;
+                Console.WriteLine($"You Are Now Longer Weilding a {weapon.Name} For + {weapon.Strength} Strength");
+                Console.WriteLine();
+                ShowInventory();
+            }
+            else
+            {
+                Console.WriteLine("You do not have a weapon equipped.");
+                Console.WriteLine();
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine("1. Back to Inventory.");
+                Console.WriteLine("2. Continue Adventure.");
+                Console.WriteLine("3. Back To Town.");
+
+                var input = Console.ReadLine();
+                if (input == "1")
+                {
+                    this.ShowInventory();
+                }
+                else if (input == "2")
+                {
+                    var explore = new Explore(this, Game);
+                    explore.Start();
+                }
+                else if (input == "3")
+                {
+                    Game.Main();
+                }
+
+            }
+        }
+
+        public void UnEquipArmor(Armor armor)
+        {
+            if (EquippedArmor != null)
+            {
+                this.EquippedArmor = null;
+                ArmorsBag.Add(armor);
+                Defense -= armor.Defense;
+                Console.WriteLine($"You Are No Longer Wearing {armor.Name} For + {armor.Defense} Defense");
+                Console.WriteLine();
+
+                ShowInventory();
+            }
+            else
+            {
+                Console.WriteLine("You Do Not Have Armor Equipped.");
+                Console.WriteLine();
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine("1. Back to Inventory.");
+                Console.WriteLine("2. Continue Adventure.");
+                Console.WriteLine("3. Back To Town.");
+
+                var input = Console.ReadLine();
+                if (input == "1")
+                {
+                    this.ShowInventory();
+                }
+                else if (input == "2")
+                {
+                    var explore = new Explore(this, Game);
+                    explore.Start();
+                }
+                else if (input == "3")
+                {
+                    Game.Main();
+                }
+
+            }
 
 
 
-        //public void EquipWeapon(Weapon)
-        //{
-        //    if(WeaponsBag.Any())
-        //    {
-        //        this.EquippedWeapon = this.WeaponsBag[0];
-        //    }
-        //}
-        
-        //public void EquipArmor(Armor)
-        //{
-        //    if(ArmorsBag.Any()) {
-        //        this.EquippedArmor = this.ArmorsBag[0];
-        //    }
-        //}
-    }
+
+            //public void EquipWeapon(Weapon)
+            //{
+            //    if(WeaponsBag.Any())
+            //    {
+            //        this.EquippedWeapon = this.WeaponsBag[0];
+            //    }
+            //}
+
+            //public void EquipArmor(Armor)
+            //{
+            //    if(ArmorsBag.Any()) {
+            //        this.EquippedArmor = this.ArmorsBag[0];
+            //    }
+            //}
+        }
 
 
 
