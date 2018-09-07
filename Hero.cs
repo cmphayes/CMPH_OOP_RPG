@@ -63,15 +63,15 @@ namespace OOP_RPG
             Console.WriteLine("Defense: " + this.Defense);
             Console.WriteLine("Hitpoints: " + this.CurrentHP + "/" + this.OriginalHP);
         }
-        
+
         public void ShowInventory() {
             Console.WriteLine("*****  INVENTORY ******");
             Console.WriteLine("Weapons: ");
-            foreach(var w in this.WeaponsBag){
+            foreach (var w in this.WeaponsBag) {
                 Console.WriteLine(w.Name + " of " + w.Strength + " Strength");
             }
             Console.WriteLine("Armors: ");
-            foreach(var a in this.ArmorsBag){
+            foreach (var a in this.ArmorsBag) {
                 Console.WriteLine(a.Name + " of " + a.Defense + " Defense");
             }
             Console.WriteLine("Potions: ");
@@ -104,7 +104,7 @@ namespace OOP_RPG
                     if (HeroWeaponCatalog.ContainsKey(WeaponSelect))
                     {
 
-                         var NewWeapon = (Weapon)HeroWeaponCatalog[WeaponSelect];
+                        var NewWeapon = (Weapon)HeroWeaponCatalog[WeaponSelect];
                         EquipWeapon(NewWeapon);
 
                     }
@@ -170,7 +170,7 @@ namespace OOP_RPG
                     Console.WriteLine($"2.){EquippedArmor.Name} {EquippedArmor.Defense} Defense");
                     Console.WriteLine($"3.)Continue Adventure");
                     var i = Console.Read();
-                   
+
                     switch (i)
                     case 1:
                         UnEquipWeapon();
@@ -180,15 +180,19 @@ namespace OOP_RPG
                         break;
                     case 3:
                         ShowInventory();
-                    break;
+                        break;
 
-                case 5:
-                    Game.Main();
-                    break;
-
+                    case 5:
+                        Game.Main();
+                        break;
+                    }
+               break;
             }
-            
         }
+    
+            
+            
+        
 
 
 
@@ -273,14 +277,14 @@ namespace OOP_RPG
 
         }
 
-        public void UnEquipWeapon(Weapon weapon)
+        public void UnEquipWeapon(Weapon EquippedWeapon)
         {
             if (EquippedWeapon != null)
             {
                 this.EquippedWeapon = null;
-                WeaponsBag.Add(weapon);
-                Strength -= weapon.Strength;
-                Console.WriteLine($"You Are Now Longer Weilding a {weapon.Name} For + {weapon.Strength} Strength");
+                WeaponsBag.Add(EquippedWeapon);
+                Strength -= EquippedWeapon.Strength;
+                Console.WriteLine($"You Are Now Longer Weilding a {EquippedWeapon.Name} For + {EquippedWeapon.Strength} Strength");
                 Console.WriteLine();
                 ShowInventory();
             }
@@ -311,14 +315,14 @@ namespace OOP_RPG
             }
         }
 
-        public void UnEquipArmor(Armor armor)
+        public void UnEquipArmor(Armor EquippedArmor)
         {
             if (EquippedArmor != null)
             {
                 this.EquippedArmor = null;
-                ArmorsBag.Add(armor);
-                Defense -= armor.Defense;
-                Console.WriteLine($"You Are No Longer Wearing {armor.Name} For + {armor.Defense} Defense");
+                ArmorsBag.Add(EquippedArmor);
+                Defense -= EquippedArmor.Defense;
+                Console.WriteLine($"You Are No Longer Wearing {EquippedArmor.Name} For + {EquippedArmor.Defense} Defense");
                 Console.WriteLine();
 
                 ShowInventory();
