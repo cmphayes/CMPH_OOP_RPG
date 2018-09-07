@@ -1,0 +1,7 @@
+C:\CFProjects\OOP_RPG-master\OOP_RPG\obj\Debug\OOP_RPG.csprojAssemblyReference.cache
+C:\CFProjects\OOP_RPG-master\OOP_RPG\obj\Debug\OOP_RPG.csproj.CoreCompileInputs.cache
+C:\CFProjects\OOP_RPG-master\OOP_RPG\bin\Debug\OOP_RPG.exe.config
+C:\CFProjects\OOP_RPG-master\OOP_RPG\bin\Debug\OOP_RPG.exe
+C:\CFProjects\OOP_RPG-master\OOP_RPG\bin\Debug\OOP_RPG.pdb
+C:\CFProjects\OOP_RPG-master\OOP_RPG\obj\Debug\OOP_RPG.exe
+C:\CFProjects\OOP_RPG-master\OOP_RPG\obj\Debug\OOP_RPG.pdb
