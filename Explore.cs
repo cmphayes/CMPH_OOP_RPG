@@ -43,7 +43,7 @@ namespace OOP_RPG
             Console.WriteLine("You enter a dungeon.");
             Console.WriteLine();
             var potion = (Potion)WildernessPotions[1];
-            Hero.PotionsBag.Add(Potion);
+            Hero.PotionsBag.Add(potion);
             Console.WriteLine("You find a potion.");
             Console.WriteLine();
             Start();
@@ -63,8 +63,8 @@ namespace OOP_RPG
             Console.WriteLine();
             Console.WriteLine("You enter a forest.");
             Console.WriteLine();
-            var potion = (Potion)WildernessPotions[1];
-            Hero.PotionsBag.Add(Potion);
+            var potion1 = (Potion)WildernessPotions[1];
+            Hero.PotionsBag.Add(potion1);
             Console.WriteLine("You find a potion.");
             Console.WriteLine();
             Start();
@@ -123,7 +123,7 @@ namespace OOP_RPG
         public void North()
         {
             Random Random = new Random();
-            switch (Random.Next(0, 5))
+            switch (Random.Next(1, 5))
             {
                 case 1:
                     Location1();
@@ -143,7 +143,7 @@ namespace OOP_RPG
         public void South()
         {
             Random Random = new Random();
-            switch (Random.Next(0, 5))
+            switch (Random.Next(1, 5))
             {
                 case 1:
                     Location1();
@@ -163,7 +163,7 @@ namespace OOP_RPG
         public void East()
         {
             Random Random = new Random();
-            switch (Random.Next(0, 5))
+            switch (Random.Next(1, 5))
             {
                 case 1:
                     Location1();
@@ -183,7 +183,7 @@ namespace OOP_RPG
         public void West()
         {
             Random Random = new Random();
-            switch (Random.Next(0, 5))
+            switch (Random.Next(1, 5))
             {
                 case 1:
                     Location1();

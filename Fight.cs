@@ -65,7 +65,7 @@ namespace OOP_RPG
             for (var loop = 1; loop <= 1; loop++)
             {
                 this.LootArmorList.Add(new Armor("WoodenArmor", 10, 2, 3));
-                this.LootArmorList.Add(new Armor("MetalPotion", 20, 5, 7));
+                this.LootArmorList.Add(new Armor("MetalArmor", 20, 5, 7));
             }
         }
 
@@ -107,11 +107,11 @@ namespace OOP_RPG
 
             var input = Console.ReadLine();
             if (input == "1") {
-                this.HeroTurn();
+                this.HeroTurn(Monster);
             }
             else if (input == "2")
             {
-                this.Run();
+                this.Run(Monster);
             }
             else
             {
@@ -120,7 +120,7 @@ namespace OOP_RPG
             }
         }
         
-        public void HeroTurn()
+        public void HeroTurn(Monster Monster)
         {
            var compare = Hero.Strength - Monster.Defense;
            int damage;
@@ -136,17 +136,16 @@ namespace OOP_RPG
            Console.WriteLine("You did " + damage + " damage!");
            
            if(this.Monster.CurrentHP <= 0){
-               this.Win();
+               this.Win(Monster);
            }
            else
            {
-               this.MonsterTurn();
+               this.MonsterTurn(Monster);
            }
            
         }
         
-        public void MonsterTurn(){
-           var Monster = this.Monster;
+        public void MonsterTurn(Monster Monster){
            int damage;
            var compare = Monster.Strength - Hero.Defense;
            if(compare <= 0) {
@@ -167,9 +166,9 @@ namespace OOP_RPG
            }
         }
         
-        public void Win() {
-            var Monster = this.Monster;
-            Console.WriteLine($"{Monster.Name} has been defeated! You win the battle!");
+        public void Win(Monster Monster)
+        {
+            Console.WriteLine(Monster.Name + " has been defeated! You win the battle!");
             this.Hero.Gold += this.Monster.Gold;
             Random Random = new Random();
             switch (Random.Next(0, 5))
@@ -177,21 +176,21 @@ namespace OOP_RPG
                 case 1:
                     Random PotionDrop = new Random();
                     var potion = (Potion)LootPotionList[PotionDrop.Next(LootPotionList.Count)];
-                    Hero.PotionsBag.Add(Potion);
+                    Hero.PotionsBag.Add(potion);
                     Console.WriteLine($"You found a {potion.Name}");
                     break;
 
                 case 2:
                     Random WeaponDrop = new Random();
                     var weapon = (Weapon)LootWeaponList[WeaponDrop.Next(LootWeaponList.Count)];
-                    Hero.WeaponsBag.Add(Weapon);
+                    Hero.WeaponsBag.Add(weapon);
                     Console.WriteLine($"You found a {weapon.Name}");
                     break;
 
                 case 3:
                     Random ArmorDrop = new Random();
                     var armor = (Armor)LootArmorList[ArmorDrop.Next(LootArmorList.Count)];
-                    Hero.ArmorsBag.Add(Armor);
+                    Hero.ArmorsBag.Add(armor);
                     Console.WriteLine($"You found a {armor.Name}");
                     break;
 
@@ -214,12 +213,12 @@ namespace OOP_RPG
             Game.Main();
         }
 
-        public void Run()
+        public void Run(Monster Monster)
         {
             if (Hero.Speed <= Monster.Speed)
             {
                 Console.WriteLine($"You Can't Out Run This {Monster.Name}.");
-                MonsterTurn();
+                MonsterTurn(Monster);
             }
             else
             {

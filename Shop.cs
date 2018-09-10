@@ -77,9 +77,7 @@ namespace OOP_RPG
 
         public void ShowShopInventory()
         {
-
             ItemCatalog.Clear();
-
             ListWeapons();
             ListArmors();
             ListPotions();
@@ -87,9 +85,7 @@ namespace OOP_RPG
 
         public void ShowHeroInventory()
         {
-
             HeroItems.Clear();
-
             ListHeroWeapons();
             ListHeroArmors();
             ListHeroPotions();
@@ -98,11 +94,9 @@ namespace OOP_RPG
         public void BuyItem()
         {
             ShowShopInventory();
-
             var itemDictNum = ("");
             Console.Write("Enter the code of the item you would like to purchase.");
             itemDictNum = Console.ReadLine();
-
             if (ItemCatalog.ContainsKey(itemDictNum))
             {
                 CheckOut(itemDictNum);
@@ -112,8 +106,6 @@ namespace OOP_RPG
                 Console.WriteLine("Please Enter a Valid Code.");
                 Start();
             }
-
-
         }
 
         public void CheckOut(string itemDictNum)
@@ -130,40 +122,32 @@ namespace OOP_RPG
                         Hero.ArmorsBag.Add(armor);
                         Console.WriteLine($"You bought a {armor.Name} for {armor.OriginalValue} gold");
                         Start();
-
                     }
                     else
                     {
                         Console.WriteLine($"You do not have enough gold to purchase {armor.Name}");
                         Start();
                     }
-
                     break;
 
                 case "p":
-                    var potion = (Potion)ItemCatalog[itemDictNum];
-
-                    if (Hero.Gold >= potion.OriginalValue)
+                    var potion3 = (Potion)ItemCatalog[itemDictNum];
+                    if (Hero.Gold >= potion3.OriginalValue)
                     {
-                        Hero.Gold -= potion.OriginalValue;
-                        PotionsList.Remove(potion);
-                        Hero.PotionsBag.Add(potion);
-                        Console.WriteLine($"You bought a {potion.Name} for {potion.OriginalValue} gold");
+                        Hero.Gold -= potion3.OriginalValue;
+                        PotionsList.Remove(potion3);
+                        Hero.PotionsBag.Add(potion3);
+                        Console.WriteLine($"You bought a {potion3.Name} for {potion3.OriginalValue} gold");
                         Start();
-
-
                     }
                     else
                     {
-                        Console.WriteLine($"You do not have enough gold to purchase {potion.Name}");
+                        Console.WriteLine($"You do not have enough gold to purchase {potion3.Name}");
                         Start();
                     }
-
                     break;
-
                 case "w":
                     var weapon = (Weapon)ItemCatalog[itemDictNum];
-
                     if (Hero.Gold >= weapon.OriginalValue)
                     {
                         Hero.Gold -= weapon.OriginalValue;
@@ -171,14 +155,12 @@ namespace OOP_RPG
                         Hero.WeaponsBag.Add(weapon);
                         Console.WriteLine($"You bought a {weapon.Name} for {weapon.OriginalValue} gold");
                         Start();
-
                     }
                     else
                     {
                         Console.WriteLine($"You do not have enough gold to purchase {weapon.Name}");
                         Start();
                     }
-
                     break;
             }
         }
@@ -255,8 +237,6 @@ namespace OOP_RPG
                 Console.WriteLine("Please Enter a Valid Code");
                 Start();
             }
-
-
         }
 
         public void ListWeapons()

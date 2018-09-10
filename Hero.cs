@@ -73,6 +73,7 @@ namespace OOP_RPG
             Console.WriteLine("Defense: " + this.Defense);
             Console.WriteLine("Hitpoints: " + this.CurrentHP + "/" + this.OriginalHP);
             Console.WriteLine("Speed: " + this.Speed);
+            Console.WriteLine("Gold: " + this.Gold);
             Console.WriteLine("Press any key to return to main menu.");
             Console.ReadKey();
             this.Game.Main();
@@ -99,11 +100,12 @@ namespace OOP_RPG
             }
             
             Console.WriteLine("What Would You Like To Do?");
-            Console.WriteLine("1.) Equip A Weapon.");
+            Console.WriteLine("1.) Equip A Weapon");
             Console.WriteLine("2.) Equip An Armor");
             Console.WriteLine("3.) Drink Potion");
-            Console.WriteLine("4.) Unequip An Item.");
-            Console.WriteLine("5.) Continue Adventure");
+            Console.WriteLine("4.) Unequip A Weapon");
+            Console.WriteLine("5.) Unequip A Armor");
+            Console.WriteLine("6.) Continue Adventure");
             var MenuSelection = Console.ReadLine();
             if (MenuSelection == "1")
             {
@@ -113,10 +115,8 @@ namespace OOP_RPG
                 WeaponSelect = Console.ReadLine();
                 if (HeroWeaponCatalog.ContainsKey(WeaponSelect))
                 {
-
                     var NewWeapon = (Weapon)HeroWeaponCatalog[WeaponSelect];
                     EquipWeapon(NewWeapon);
-
                 }
                 else if (!HeroWeaponCatalog.ContainsKey(WeaponSelect))
                 {
@@ -127,7 +127,6 @@ namespace OOP_RPG
             }
             else if (MenuSelection == "2")
             {
-
                 Console.WriteLine("Which Item Would You Like To Equip?");
                 ListHeroArmor();
                 var ArmorSelect = "";
@@ -152,8 +151,7 @@ namespace OOP_RPG
                 if (HeroPotionsCatalog.ContainsKey(PotionSelect))
                 {
                     var NewPotion = (Potion)HeroPotionsCatalog[PotionSelect];
-                    PotionsBag.Remove(NewPotion);
-                    this.CurrentHP += NewPotion.HP;
+                    DrinkPotion(NewPotion);
                 }
                 else if (!HeroPotionsCatalog.ContainsKey(PotionSelect))
                 {
@@ -163,61 +161,57 @@ namespace OOP_RPG
             }
             else if (MenuSelection == "4")
             {
+                if (EquippedWeapon != null)
+                {
+                    UnEquipWeapon(EquippedWeapon);
 
-                
-                    Console.WriteLine("Which Item Would You Like To Unequip?");
-                    Console.WriteLine($"1.){EquippedWeapon.Name} {EquippedWeapon.Strength} Strength");
-                    Console.WriteLine($"2.){EquippedArmor.Name} {EquippedArmor.Defense} Defense");
-                    Console.WriteLine($"3.)Continue Adventure");
-                    var UnequipVar = Console.Read();
-
-                    switch (UnequipVar)
-                    {
-                        case 1:
-
-                            UnEquipWeapon(Weapon);
-
-                            break;
-
-                        case 2:
-
-                            UnEquipArmor(Armor);
-
-                            break;
-
-                        case 3:
-
-                            ShowInventory();
-
-                            break;
-
-                        case 5:
-
-                            Game.Main();
-
-                            break;
-                    }
-                
-            }         
-            
+                }
+                else if (EquippedWeapon == null)
+                {
+                    Console.WriteLine("You Do Not Have A Weapon Equipped");
+                    this.ShowInventory();
+                }
+            }
             else if (MenuSelection == "5")
             {
-
-                Game.Main();
-
-
+                if (EquippedArmor != null)
+                {
+                    UnEquipArmor(EquippedArmor);
+                }
+                else if (EquippedArmor == null)
+                {
+                    Console.WriteLine("You Do Not Have Armor Equipped");
+                    this.ShowInventory();
+                }
             }
+            else if (MenuSelection == "6")
+            {            
+                    Console.WriteLine();
+                    Console.WriteLine("What would you like to do?");
+                    Console.WriteLine("1. Back to Inventory.");
+                    Console.WriteLine("2. Continue Adventure.");
+                    Console.WriteLine("3. Back To Town.");
+
+                    var input = Console.ReadLine();
+                    if (input == "1")
+                    {
+                        this.ShowInventory();
+                    }
+                    else if (input == "2")
+                    {
+                        var explore = new Explore(this, Game);
+                        explore.Start();
+                    }
+                    else if (input == "3")
+                    {
+                        this.Game.Main();
+                    }
+            }         
             else
             {
                 Game.Main();
-            }
-
-            
-
-
+            }         
         }
-
-
 
         public void EquipWeapon(Weapon weapon)
         {
@@ -259,7 +253,6 @@ namespace OOP_RPG
 
         }
 
-
         public void EquipArmor(Armor armor)
         {
             if (EquippedArmor == null)
@@ -270,7 +263,6 @@ namespace OOP_RPG
                 Speed -= armor.Defense;
                 Console.WriteLine($"You Are Now Wearing {armor.Name} For + {armor.OriginalValue} Defense");
                 Console.WriteLine();
-
                 ShowInventory();
             }
             else
@@ -294,167 +286,84 @@ namespace OOP_RPG
                 }
                 else if (input == "3")
                 {
-                    Console.WriteLine("Press any key to return to main menu.");
-                    Console.ReadKey();
                     this.Game.Main();
                 }
             }
         }
-
-
-
-
-
-
-            public void UnEquipWeapon(Weapon EquippedWeapon)
+        
+        public void UnEquipWeapon(Weapon EquippedWeapon)
             {
-                if (EquippedWeapon != null)
-                {
                     WeaponsBag.Add(EquippedWeapon);
                     Strength -= EquippedWeapon.Strength;
-                    this.EquippedWeapon = null;
                     Console.WriteLine($"You Are Now Longer Weilding a {EquippedWeapon.Name} For + {EquippedWeapon.Strength} Strength");
+                    this.EquippedWeapon = null;
+
                     Console.WriteLine();
                     ShowInventory();
-                }
-                else
-                {
-                    Console.WriteLine("You do not have a weapon equipped.");
-                    Console.WriteLine();
-                    Console.WriteLine("What would you like to do?");
-                    Console.WriteLine("1. Back to Inventory.");
-                    Console.WriteLine("2. Continue Adventure.");
-                    Console.WriteLine("3. Back To Town.");
-
-                    var input = Console.ReadLine();
-                    if (input == "1")
-                    {
-                        this.ShowInventory();
-                    }
-                    else if (input == "2")
-                    {
-                        var explore = new Explore(this, Game);
-                        explore.Start();
-                    }
-                    else if (input == "3")
-                    {
-                        Console.WriteLine("Press any key to return to main menu.");
-                        Console.ReadKey();
-                        this.Game.Main();
-                    }
-
-                }
             }
         
-
-
-
-
-
-
         public void UnEquipArmor(Armor EquippedArmor)
         {
-            if (EquippedArmor != null)
-            {
                 ArmorsBag.Add(EquippedArmor);
                 Defense -= EquippedArmor.Defense;
                 Speed += EquippedArmor.Defense;
-                this.EquippedArmor = null;
                 Console.WriteLine($"You Are No Longer Wearing {EquippedArmor.Name} For + {EquippedArmor.Defense} Defense");
+                this.EquippedArmor = null;
                 Console.WriteLine();
-
                 ShowInventory();
-            }
-            else
-            {
-                Console.WriteLine("You Do Not Have Armor Equipped.");
-                Console.WriteLine();
-                Console.WriteLine("What would you like to do?");
-                Console.WriteLine("1. Back to Inventory.");
-                Console.WriteLine("2. Continue Adventure.");
-                Console.WriteLine("3. Back To Town.");
-
-                var input = Console.ReadLine();
-                if (input == "1")
-                {
-                    this.ShowInventory();
-                }
-                else if (input == "2")
-                {
-                    var explore = new Explore(this, Game);
-                    explore.Start();
-                }
-                else if (input == "3")
-                {
-                    Console.WriteLine("Press any key to return to main menu.");
-                    Console.ReadKey();
-                    this.Game.Main();
-                }
-            }
-
-            }
 
 
-
-
-            //public void EquipWeapon(Weapon)
-            //{
-            //    if(WeaponsBag.Any())
-            //    {
-            //        this.EquippedWeapon = this.WeaponsBag[0];
-            //    }
-            //}
-
-            //public void EquipArmor(Armor)
-            //{
-            //    if(ArmorsBag.Any()) {
-            //        this.EquippedArmor = this.ArmorsBag[0];
-            //    }
-            //}
-        
+        }
 
         public void ListHeroWeapons()
         {
+            HeroWeaponCatalog.Clear();
             Console.WriteLine("Weapons:");
 
             var WeaponCount = 1;
             foreach (var wl in this.WeaponsBag)
             {
-                Console.WriteLine($"{WeaponCount}.) {wl.Name} - Original Value: {wl.OriginalValue}, Resell Value: {wl.ResellValue}");
+                Console.WriteLine($"{WeaponCount}) {wl.Name} - Original Value: {wl.OriginalValue}, Resell Value: {wl.ResellValue}");
                 HeroWeaponCatalog.Add($"{WeaponCount}", wl);
                 WeaponCount++;
             }
-            Console.WriteLine();
-        }
+            Console.WriteLine();        }
 
         public void ListHeroArmor()
         {
+            HeroArmorCatalog.Clear();
             Console.WriteLine("Armor:");
-
             var ArmorCount = 1;
             foreach (var al in this.ArmorsBag)
             {
-                Console.WriteLine($"{ArmorCount}.) {al.Name} - Original Value: {al.OriginalValue}, Resell Value: {al.ResellValue}");
+                Console.WriteLine($"{ArmorCount}) {al.Name} - Original Value: {al.OriginalValue}, Resell Value: {al.ResellValue}");
                 HeroArmorCatalog.Add($"{ArmorCount}", al);
                 ArmorCount++;
             }
             Console.WriteLine();
-
         }
 
         public void ListHeroPotions()
         {
+            HeroPotionsCatalog.Clear();
             Console.WriteLine("Potions:");
-
             var PotionCount = 1;
             foreach (var pl in this.PotionsBag)
             {
-                Console.WriteLine($"{PotionCount}.) {pl.Name} - Original Value: {pl.OriginalValue}, Resell Value: {pl.ResellValue}");
+                Console.WriteLine($"{PotionCount}) {pl.Name} - Original Value: {pl.OriginalValue}, Resell Value: {pl.ResellValue}");
                 HeroPotionsCatalog.Add($"{PotionCount}", pl);
                 PotionCount++;
             }
-            Console.ReadLine();
+            Console.WriteLine();
+        }
 
+        public void DrinkPotion(Potion NewPotion)
+        {
+            PotionsBag.Remove(NewPotion);
+            this.CurrentHP += NewPotion.HP;
+            Console.WriteLine($"You Drank {NewPotion.Name} for +{NewPotion.HP}HP");
+            Console.WriteLine($"Your HP Is Now {this.CurrentHP}");
+            ShowInventory();
         }
     }
 }
