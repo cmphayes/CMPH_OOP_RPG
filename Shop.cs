@@ -71,7 +71,7 @@ namespace OOP_RPG
                 this.WeaponsList.Add(new Weapon("LongSword", 20, 5, 7));
 
                 this.ArmorList.Add(new Armor("WoodenArmor", 10, 2, 3));
-                this.ArmorList.Add(new Armor("MetalPotion", 20, 5, 7));
+                this.ArmorList.Add(new Armor("MetalArmor", 20, 5, 7));
             }
         }
 

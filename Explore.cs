@@ -46,6 +46,7 @@ namespace OOP_RPG
             Hero.PotionsBag.Add(Potion);
             Console.WriteLine("You find a potion.");
             Console.WriteLine();
+            Start();
         }
         public void Location3()
         {
@@ -62,10 +63,11 @@ namespace OOP_RPG
             Console.WriteLine();
             Console.WriteLine("You enter a forest.");
             Console.WriteLine();
-            var potion = (Potion)WildernessPotions[0];
+            var potion = (Potion)WildernessPotions[1];
             Hero.PotionsBag.Add(Potion);
             Console.WriteLine("You find a potion.");
             Console.WriteLine();
+            Start();
         }
 
         public void StockWilderness()

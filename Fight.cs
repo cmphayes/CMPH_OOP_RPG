@@ -17,6 +17,8 @@ namespace OOP_RPG
         public Armor Armor { get; set; }
         public Potion Potion { get; set; }
         public Weapon Weapon { get; set; }
+        public int Speed { get; set; }
+
 
         public Fight(Hero Hero, Game Game)
         {
@@ -28,6 +30,7 @@ namespace OOP_RPG
             this.Monster = new Monster();
             this.Hero = Hero;
             this.Game = Game;
+            this.Speed = Speed;
 
             StockMonsters();
             StockWeaponLoot();
@@ -39,11 +42,11 @@ namespace OOP_RPG
         {
             for (var loop = 1; loop <= 3; loop++)
             {
-                this.MonstersList.Add(new Monster("Wolf", 9, 8, 20, 5));
-                this.MonstersList.Add(new Monster("Goblin", 10, 10, 10, 10));
-                this.MonstersList.Add(new Monster("Ghost", 5, 2, 1, 15));
-                this.MonstersList.Add(new Monster("Ghoul", 15, 15, 8, 20));
-                this.MonstersList.Add(new Monster("Zombie", 15, 15, 8, 21));
+                this.MonstersList.Add(new Monster("Wolf", 9, 8, 20, 5, 3));
+                this.MonstersList.Add(new Monster("Goblin", 10, 10, 10, 10, 4));
+                this.MonstersList.Add(new Monster("Ghost", 5, 2, 1, 15, 5));
+                this.MonstersList.Add(new Monster("Ghoul", 15, 15, 8, 20, 6));
+                this.MonstersList.Add(new Monster("Zombie", 15, 15, 8, 21, 9));
             }
         }
 
@@ -106,8 +109,14 @@ namespace OOP_RPG
             if (input == "1") {
                 this.HeroTurn();
             }
-            else { 
+            else if (input == "2")
+            {
+                this.Run();
+            }
+            else
+            {
                 this.Game.Main();
+
             }
         }
         
@@ -203,6 +212,22 @@ namespace OOP_RPG
         public void Lose() {
             Console.WriteLine("You pass out in the wilderness but wake up back in town.");
             Game.Main();
+        }
+
+        public void Run()
+        {
+            if (Hero.Speed <= Monster.Speed)
+            {
+                Console.WriteLine($"You Can't Out Run This {Monster.Name}.");
+                MonsterTurn();
+            }
+            else
+            {
+                Console.WriteLine("You Got Away!");
+                var explore = new Explore(Hero, Game);
+                explore.Start();
+            }
+
         }
 
 

@@ -12,10 +12,11 @@ namespace OOP_RPG
         public int OriginalHP { get; set; }
         public int CurrentHP { get; set; }
         public int Gold { get; set; }
+        public int Speed { get; set; }
 
         public Monster() { }
 
-        public Monster(string Name, int Strength, int Defense, int HP, int Gold)
+        public Monster(string Name, int Strength, int Defense, int HP, int Gold, int Speed)
         {
             this.Name = Name;
             this.Strength = Strength;
@@ -23,6 +24,7 @@ namespace OOP_RPG
             this.OriginalHP = HP;
             this.CurrentHP = HP;
             this.Gold = Gold;
+            this.Speed = Speed;
                        
         }
 

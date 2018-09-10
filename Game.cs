@@ -10,7 +10,7 @@ namespace OOP_RPG
         public Monster Monster { get; set; }
         
         public Game() {
-            this.Hero = new Hero();
+            this.Hero = new Hero(this);
         }
             
         public void Start() {
@@ -54,17 +54,13 @@ namespace OOP_RPG
         public void Stats()
         {
             Hero.ShowStats();
-            Console.WriteLine("Press any key to return to main menu.");
-            Console.ReadKey();
-            this.Main();
+
         }
         
         public void Inventory()
         {
             Hero.ShowInventory();
-            Console.WriteLine("Press any key to return to main menu.");
-            Console.ReadKey();
-            this.Main();
+
         }
         
         public void Fight()
@@ -74,7 +70,7 @@ namespace OOP_RPG
             fight.Start();
         }
 
-       // public void Explore()
+        public void Explore()
         {
             //var myMonster = new Monster();
             var explore = new Explore (Hero, this);
